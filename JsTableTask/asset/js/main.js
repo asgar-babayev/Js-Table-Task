@@ -11,12 +11,17 @@ let btnEdit = document.getElementById("btnEdit");
 
 btn.addEventListener("click", function () {
     modal.style.display = "block";
+    btnAdd.classList.remove("d-none");
+    btnEdit.classList.add("d-none");
+    document.getElementById("namein").value = "";
+    document.getElementById("surnamein").value = "";
+    document.getElementById("agein").value = "";
 })
 
 span.addEventListener("click", function () {
     modal.style.display = "none";
-    btnEdit.style.display = "none";
-    btnAdd.style.display = "block";
+    btnAdd.classList.remove("d-none");
+    btnEdit.classList.add("d-none");
     document.querySelectorAll("tr").forEach(x => {
         x.classList.remove("active");
     })
@@ -25,8 +30,8 @@ span.addEventListener("click", function () {
 window.addEventListener("click", function () {
     if (event.target == modal) {
         modal.style.display = "none";
-        btnEdit.style.display = "none";
-        btnAdd.style.display = "block";
+        btnAdd.classList.remove("d-none");
+        btnEdit.classList.add("d-none");
         document.querySelectorAll("tr").forEach(x => {
             x.classList.remove("active");
         })
@@ -35,7 +40,6 @@ window.addEventListener("click", function () {
 
 let input = document.querySelectorAll(".inp");
 let searchId = document.querySelector(".searchId");
-
 searchId.onkeyup = function () {
     for (let i = 1; i < table.rows.length; i++) {
         if (table.rows[i].cells[1].innerHTML.includes(searchId.value) == true || table.rows[i].cells[2].innerHTML.includes(searchId.value) == true || table.rows[i].cells[3].innerHTML.includes(searchId.value) == true) {
@@ -84,22 +88,37 @@ btnAdd.addEventListener("click", function (e) {
     e.preventDefault();
     const tr = document.createElement("tr");
     let number = document.createElement("td");
-    table.append(tr);
-    tr.append(number);
-    input.forEach(x => {
-        let td = document.createElement("td");
-        td.innerText = x.value;
-        tr.append(td);
-        modal.style.display = "none";
-    })
-    //Edit Button
-    createEditBtn(tr);
+    let namein = document.getElementById("namein").value;
+    let surnamein = document.getElementById("surnamein").value;
+    let agein = document.getElementById("agein").value;
+    if (namein != "" && surnamein != "" && agein != "") {
+        table.append(tr);
+        tr.append(number);
+        input.forEach(x => {
+            let td = document.createElement("td");
+            td.innerText = x.value;
+            tr.append(td);
+            modal.style.display = "none";
+        })
+        //Edit Button
+        createEditBtn(tr);
 
-    //Delete Button
-    createDeleteButton(tr);
+        //Delete Button
+        createDeleteButton(tr);
 
-    for (var i = 1; i < table.rows.length; i++) {
-        table.rows[i].cells[0].innerHTML = i;
+        for (var i = 1; i < table.rows.length; i++) {
+            table.rows[i].cells[0].innerHTML = i;
+        }
+    }
+    else {
+        input.forEach(x => {
+            validate(x);
+        })
+    }
+})
+window.addEventListener("keypress", function (e) {
+    if (e.key == "Enter") {
+        e.preventDefault();
     }
 })
 
@@ -114,37 +133,43 @@ function createEditBtn(tr) {
     tr.append(edit);
     editBtn.addEventListener("click", function (e) {
         e.preventDefault();
-        btnAdd.style.display = "none";
-        btnEdit.style.display = "block";
+        btnAdd.classList.add("d-none");
+        btnEdit.classList.remove("d-none");
         modal.style.display = "block";
         let currentind = this.closest('tr').rowIndex;
+        id = currentind;
         console.log(currentind);
         document.getElementById("namein").value = table.rows[currentind].cells[1].innerHTML;
         document.getElementById("surnamein").value = table.rows[currentind].cells[2].innerHTML;
         document.getElementById("agein").value = table.rows[currentind].cells[3].innerHTML;
 
-        btnEdit.addEventListener("click", function (e) {
-            e.preventDefault();
-            editHtmlTbleSelectedRow(currentind);
-            modal.style.display = "none";
-            btnAdd.style.display = "block";
-            btnEdit.style.display = "none";
-        })
     })
 }
 
+let id = 0;
+btnEdit.addEventListener("click", function (e) {
+    e.preventDefault();
+    if (namein != "" && surnamein != "" && agein != "") {
+        editHtmlTbleSelectedRow(id);
+        modal.style.display = "none";
+        btnAdd.classList.remove("d-none");
+        btnEdit.classList.add("d-none");
+    }
+    else {
+        input.forEach(x => {
+            validate(x);
+        })
+    }
+})
 
 function editHtmlTbleSelectedRow(rIndexx) {
-    var namein = document.getElementById("namein").value,
-        surnamein = document.getElementById("surnamein").value,
-        agein = document.getElementById("agein").value;
+    let namein = document.getElementById("namein").value;
+    let surnamein = document.getElementById("surnamein").value;
+    let agein = document.getElementById("agein").value;
     table.rows[rIndexx].cells[1].innerHTML = namein;
     table.rows[rIndexx].cells[2].innerHTML = surnamein;
     table.rows[rIndexx].cells[3].innerHTML = agein;
 }
-
-
-
 
 function createDeleteButton(tr) {
     let del = document.createElement("td");
@@ -158,7 +183,9 @@ function createDeleteButton(tr) {
     delBtn.addEventListener("click", function (e) {
         e.preventDefault();
         let currentind2 = this.closest('tr').rowIndex;
-        if (confirm('Are you sure you want to delete this row?')) {
+        let n = table.rows[currentind2].cells[1].innerText;
+        let s = table.rows[currentind2].cells[2].innerText;
+        if (confirm(`Should ${n} ${s} be deleted?`)) {
             this.parentElement.parentElement.remove();
             deleteSelectedRow(currentind2);
         }

@@ -37,18 +37,18 @@
                     <form class="d-flex flex-column">
                         <label for="name">Name</label>
                         <input class="inp" type="text" autocomplete="off" id="namein" placeholder="Enter name..."
-                            value="Asgar">
+                            value="Asgar" required>
                         <small class="text-danger d-none">Name is required</small>
                         <label for="surname">Surname</label>
                         <input class="inp" type="text" autocomplete="off" id="surnamein" placeholder="Enter surname..."
-                            value="Babayev">
+                            value="Babayev" required>
                         <small class="text-danger d-none">Surname is required</small>
                         <label for="age">Age</label>
                         <input class="inp" type="number" autocomplete="off" id="agein" min="0"
-                            placeholder="Enter age..." value="21">
+                            placeholder="Enter age..." value="21" required>
                         <small class="text-danger d-none">Age is required</small>
-                        <button id="btnAdd" class="mt-3 btn">Add</button>
-                        <button id="btnEdit" class="mt-3 btn d-none">Edit</button>
+                        <button id="btnAdd" type="submit" class="mt-3 btn">Add</button>
+                        <button id="btnEdit" type="submit" class="mt-3 btn">Edit</button>
                     </form>
                 </div>
             </div>
