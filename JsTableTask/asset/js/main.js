@@ -1,9 +1,15 @@
 
 let modal = document.getElementById("myModal");
 
+let delmodal = document.getElementById("delModal");
+
+let p = document.querySelector("p");
+
 let btn = document.getElementById("btn");
 
 let span = document.getElementsByClassName("close")[0];
+
+let delSpan = document.getElementsByClassName("closeDelModal")[0];
 
 let btnAdd = document.getElementById("btnAdd");
 
@@ -27,15 +33,8 @@ span.addEventListener("click", function () {
     })
 })
 
-window.addEventListener("click", function () {
-    if (event.target == modal) {
-        modal.style.display = "none";
-        btnAdd.classList.remove("d-none");
-        btnEdit.classList.add("d-none");
-        document.querySelectorAll("tr").forEach(x => {
-            x.classList.remove("active");
-        })
-    }
+delSpan.addEventListener("click", function () {
+    delmodal.style.display = "none";
 })
 
 let input = document.querySelectorAll(".inp");
@@ -171,6 +170,7 @@ function editHtmlTbleSelectedRow(rIndexx) {
     table.rows[rIndexx].cells[3].innerHTML = agein;
 }
 
+let delId = 0;
 function createDeleteButton(tr) {
     let del = document.createElement("td");
     let delBtn = document.createElement("a");
@@ -182,15 +182,30 @@ function createDeleteButton(tr) {
 
     delBtn.addEventListener("click", function (e) {
         e.preventDefault();
+        delmodal.style.display = "block";
         let currentind2 = this.closest('tr').rowIndex;
+        delId = currentind2;
         let n = table.rows[currentind2].cells[1].innerText;
         let s = table.rows[currentind2].cells[2].innerText;
-        if (confirm(`Should ${n} ${s} be deleted?`)) {
-            this.parentElement.parentElement.remove();
-            deleteSelectedRow(currentind2);
-        }
+        p.innerText = `Should ${n} ${s} be deleted?`;
     })
 }
+
+let btnyes = document.getElementById("btnyes");
+let btnno = document.getElementById("btnno");
+
+btnyes.addEventListener("click", function (e) {
+    e.preventDefault();
+    table.rows[delId].remove();
+    deleteSelectedRow(delId);
+    delmodal.style.display = "none";
+})
+
+
+btnno.addEventListener("click", function (e) {
+    delmodal.style.display = "none";
+    e.preventDefault();
+})
 
 function deleteSelectedRow(rIndexxx) {
     for (var i = rIndexxx; i < table.rows.length; i++) {

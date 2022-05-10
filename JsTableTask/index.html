@@ -29,31 +29,41 @@
                 </tr>
             </table>
             <button id="btn" class="btn">Add</button>
-
-            <div id="myModal" class="modal">
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <br>
-                    <form class="d-flex flex-column">
-                        <label for="name">Name</label>
-                        <input class="inp" type="text" autocomplete="off" id="namein" placeholder="Enter name..."
-                            value="Asgar" required>
-                        <small class="text-danger d-none">Name is required</small>
-                        <label for="surname">Surname</label>
-                        <input class="inp" type="text" autocomplete="off" id="surnamein" placeholder="Enter surname..."
-                            value="Babayev" required>
-                        <small class="text-danger d-none">Surname is required</small>
-                        <label for="age">Age</label>
-                        <input class="inp" type="number" autocomplete="off" id="agein" min="0"
-                            placeholder="Enter age..." value="21" required>
-                        <small class="text-danger d-none">Age is required</small>
-                        <button id="btnAdd" type="submit" class="mt-3 btn">Add</button>
-                        <button id="btnEdit" type="submit" class="mt-3 btn">Edit</button>
-                    </form>
-                </div>
+        </div>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <br>
+                <form class="d-flex flex-column">
+                    <label for="name">Name</label>
+                    <input class="inp" type="text" autocomplete="off" id="namein" placeholder="Enter name..."
+                        value="Asgar" required>
+                    <small class="text-danger d-none">Name is required</small>
+                    <label for="surname">Surname</label>
+                    <input class="inp" type="text" autocomplete="off" id="surnamein" placeholder="Enter surname..."
+                        value="Babayev" required>
+                    <small class="text-danger d-none">Surname is required</small>
+                    <label for="age">Age</label>
+                    <input class="inp" type="number" autocomplete="off" id="agein" min="0" placeholder="Enter age..."
+                        value="21" required>
+                    <small class="text-danger d-none">Age is required</small>
+                    <button id="btnAdd" type="submit" class="mt-3 btn">Add</button>
+                    <button id="btnEdit" type="submit" class="mt-3 btn">Edit</button>
+                </form>
             </div>
         </div>
     </main>
+    <div id="delModal" class="modal">
+        <div class="modal-content">
+            <span class="closeDelModal">&times;</span>
+            <br>
+            <p></p>
+            <div class="container justify-content-spacebetween mt-3">
+                <a id="btnyes" class="btn">Yes</a>
+                <a id="btnno" class="btn bg-danger">No</a>
+            </div>
+        </div>
+    </div>
 
     <script src="asset/js/main.js"></script>
 </body>
